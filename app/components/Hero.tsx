@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { projects, skills, socialLinks } from '../lib/constants'
-import { SidebarTrigger } from '@/components/ui/sidebar'
 
 export const Hero = () => {
   return (
