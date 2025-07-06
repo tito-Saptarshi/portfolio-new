@@ -18,8 +18,23 @@ export default function SimpleProjectForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    await createProject(formData, pitch);
-    router.push("/");
+    const response = await createProject(formData, pitch);
+
+    console.log(
+      "server action -> createProject -> message : ",
+      response?.message
+    );
+    console.log(
+      "server action -> createProject -> status : ",
+      response?.status
+    );
+    console.log("server action -> createProject -> response : ", response);
+
+    if (response?.status === "green") {
+      router.push("/");
+    } else {
+      console.log("server action failed. check logs -> createProject");
+    }
   };
 
   return (

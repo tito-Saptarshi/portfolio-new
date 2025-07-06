@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -18,28 +11,22 @@ datasource db {
 model Project {
   id           String  @id @default(uuid())
   name         String
-  description  String
-  tools_used   String?
   project_type String?
-  
-  imageUrl     String?
-  
-  github_link  String?
   project_link String?
+  tools_used   String?
+  github_link  String?
   other_link   String?
-
+  imageUrl     String?
   details      String?
-
-  likes         Int      @default(0)
-  views         Int      @default(0)
+  likes        Int     @default(0)
+  views        Int     @default(0)
 }
 
 model User {
-  id           String  @id @default(uuid())
-  userId       String?
-  name         String?
-  email        String?  @unique
-  imageUrl     String?
-  
-  likesId      String[] @default([])
+  id       String   @id @default(uuid())
+  userId   String?
+  name     String?
+  email    String?  @unique
+  imageUrl String?
+  likesId  String[] @default([])
 }
