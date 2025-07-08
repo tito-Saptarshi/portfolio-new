@@ -57,8 +57,10 @@ interface ProjectDetailProps {
   onBack: () => void
 }
 
-export default function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
+export default function ProjectDetail({ params }: { params: { id: string } }) {
   const [showSignInDialog, setShowSignInDialog] = useState(false)
+
+const projectId = parseInt(params.id, 10)
 
   const project = projects.find((p) => p.id === projectId)
 
@@ -67,7 +69,7 @@ export default function ProjectDetail({ projectId, onBack }: ProjectDetailProps)
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-900 dark:via-gray-900 dark:to-black flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Project Not Found</h2>
-          <Button onClick={onBack} variant="outline">
+          <Button onClick={() => {}} variant="outline">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Projects
           </Button>
@@ -86,7 +88,7 @@ export default function ProjectDetail({ projectId, onBack }: ProjectDetailProps)
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
           <Button
-            onClick={onBack}
+            onClick={() => window.history.back()}
             variant="ghost"
             className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
           >

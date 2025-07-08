@@ -20,6 +20,8 @@ model Project {
   details      String?
   likes        Int     @default(0)
   views        Int     @default(0)
+
+  craetedAt    DateTime @default(now())
 }
 
 model User {
