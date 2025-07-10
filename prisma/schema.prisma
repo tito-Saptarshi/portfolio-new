@@ -21,7 +21,16 @@ model Project {
   likes        Int     @default(0)
   views        Int     @default(0)
 
-  craetedAt    DateTime @default(now())
+  userId       String[] @default([])
+
+  createdAt DateTime @default(now())
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
 }
 
 model User {

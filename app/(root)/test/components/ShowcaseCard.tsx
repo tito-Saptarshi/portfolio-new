@@ -15,16 +15,10 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { useState } from "react";
+
 
 import markdownit from "markdown-it";
+import { ProjectStatsCard } from "./ProjectStatsCard";
 
 export function ShowcaseCard({
   project,
@@ -37,7 +31,7 @@ export function ShowcaseCard({
 
   const parsedContent = md.render(project?.details || "");
 
-  const [showSignInDialog, setShowSignInDialog] = useState(false);
+  // const [showSignInDialog, setShowSignInDialog] = useState(false);
 
   console.log("Project ID: ", id);
   console.log("Project Details -> ShowcaseCard : ", project);
@@ -147,7 +141,7 @@ export function ShowcaseCard({
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          {/* <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200 dark:border-gray-800 sticky top-24">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -216,12 +210,14 @@ export function ShowcaseCard({
                 </Button>
               </div>
             </div>
-          </div>
+          </div> */}
+
+          <ProjectStatsCard project={project} />
         </div>
       </div>
 
       {/* Sign-In Dialog */}
-      <Dialog open={showSignInDialog} onOpenChange={setShowSignInDialog}>
+      {/* <Dialog open={showSignInDialog} onOpenChange={setShowSignInDialog}>
         <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -267,7 +263,7 @@ export function ShowcaseCard({
             </p>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

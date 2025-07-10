@@ -16,15 +16,11 @@ export default async function Page({ params }: { params: { id: string } }) {
   const project = await getData(params.id);
   if (!project) return redirect("/");
 
-    console.log("Project Details: ", project);
-    
+  console.log("Project Details: ", project);
 
   return (
     <main>
-      <div>
-        <h1>Project Details</h1>
-        <ShowcaseCard project={project} id={params.id} />
-      </div>
+      <ShowcaseCard project={project} id={params.id} />
     </main>
   );
 }
