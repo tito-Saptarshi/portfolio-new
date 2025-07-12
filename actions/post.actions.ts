@@ -36,8 +36,8 @@ export async function likePost(projectId: string) {
   }
 }
 
-export async function likePostTest(projectId: string) {
-  console.log("server action -> likePostTest : ");
+export async function likeAdminMessageTest(project: Project, message: string) {
+  console.log("server action -> likeAdminMessageTest : ");
   console.log();
 
   const { userId, redirectToSignIn } = await auth();
@@ -45,7 +45,10 @@ export async function likePostTest(projectId: string) {
   if (!userId) return redirectToSignIn();
 
   console.log("User ID: ", userId);
-  console.log("Project ID: ", projectId);
+   console.log("User ID: ", userId);
+  console.log("Project ID: ", project.id);
+  console.log("Project : ", project);
+  console.log("Message : ", message);
 }
 
 // new - prod
@@ -90,5 +93,51 @@ export async function modifiedLikePost(
   } catch (error) {
     console.log(error);
     return { success: false, message: "Failed to update like. Try again." };
+  }
+}
+
+export async function incrementViews(projectId: string) {
+  try {
+    await prisma.project.update({
+      where: { id: projectId },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Failed to increment views", error);
+  }
+}
+
+export async function sendAdminMessage(formData: FormData) {
+  const { getUser } = auth();
+  const user = await getUser();
+
+  if (!user || !user.id) {
+    return { success: false, message: "User not authenticated" };
+  }
+
+  const message = formData.get("messageAdmin")?.toString();
+
+  if (!message || message.trim() === "") {
+    return { success: false, message: "Message cannot be empty" };
+  }
+
+  try {
+    await prisma.adminContact.create({
+      data: {
+        userId: user.id,
+        userName: user.given_name || "Anonymous",
+        userMail: user.email || "noemail@example.com",
+        message: message,
+      },
+    });
+
+    return { success: true, message: "Message sent successfully" };
+  } catch (error) {
+    console.error("Error sending message to admin:", error);
+    return { success: false, message: "Failed to send message" };
   }
 }

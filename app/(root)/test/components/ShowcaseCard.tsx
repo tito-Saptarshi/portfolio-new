@@ -18,6 +18,8 @@ import markdownit from "markdown-it";
 import { ProjectStatsCard } from "./ProjectStatsCard";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
+import View from "./View";
+import { extractWords } from "@/app/lib/utils";
 
 export async function ShowcaseCard({
   project,
@@ -27,6 +29,11 @@ export async function ShowcaseCard({
   id: string;
 }) {
   const { userId } = await auth();
+
+  let tools_used;
+  if (project.tools_used) {
+    tools_used = extractWords(project.tools_used);
+  }
 
   let isPostLiked = false;
 
@@ -100,16 +107,16 @@ export async function ShowcaseCard({
                     Technologies Used
                   </h2>
                   <div className="flex flex-wrap gap-2">
-                    {/* {project.skills.map((skill) => (
+                    {tools_used?.map((skill) => (
                       <Badge
                         key={skill}
                         variant="outline"
                         className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 px-3 py-1"
                       >
-                        {skillIcons[skill as keyof typeof skillIcons] || <Code className="w-4 h-4" />}
+                        {/* { <Code className="w-4 h-4" />} */}
                         {skill}
                       </Badge>
-                    ))} */}
+                    ))}
                   </div>
                 </div>
                 <div className="flex flex-col items-start sm:items-end gap-2">
@@ -275,6 +282,7 @@ export async function ShowcaseCard({
           </div>
         </DialogContent>
       </Dialog> */}
+      {/* <View /> */}
     </div>
   );
 }

@@ -42,8 +42,18 @@ model User {
   likesId  String[] @default([])
 }
 
+model AdminContact {
+  id          String  @id @default(uuid())
+  message     String
+  userMail    String
+  userId      String
+  userName    String
+  projectId   String?
+  projectName String?
+}
+
 model Test {
-  id        String  @id @default(uuid())
-  testField String?
+  id         String  @id @default(uuid())
+  testField  String?
   testField2 String?
 }

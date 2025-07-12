@@ -5,7 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Eye, Heart, Loader2 } from "lucide-react";
 import { Project } from "@/app/(root)/test/lib/types";
 import { useState } from "react";
-import { likePostTest, modifiedLikePost } from "@/actions/post.actions";
+import { likeAdminMessageTest, modifiedLikePost } from "@/actions/post.actions";
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export function ProjectStatsCard({
   project,
@@ -26,19 +39,42 @@ export function ProjectStatsCard({
     setLikes((prev) => prev + (isLiking ? 1 : -1));
 
     const res = await modifiedLikePost(project, isPostLiked);
-    console.error("res: " + res);
+    console.log("res: " + res);
     if (!res.success) {
       // rollback UI if failed
       setToggleLike(!isLiking);
       setLikes((prev) => prev - (isLiking ? 1 : -1));
-      console.error("res.message -> success: " + res.message); // or use toast later
+      console.log("res.message -> success: " + res.message); // or use toast later
     } else {
-      console.error("res.message : fails" + res.message);
+      console.log("res.message : fails" + res.message);
       console.log(res.message); // or use toast later
     }
 
     setLoading(false);
   };
+
+    const sendMessage = async () => {
+    setLoading(true);
+
+    const isLiking = !toggleLike;
+    setToggleLike(isLiking);
+    setLikes((prev) => prev + (isLiking ? 1 : -1));
+
+    const res = await modifiedLikePost(project, isPostLiked);
+    console.log("res: " + res);
+    if (!res.success) {
+      // rollback UI if failed
+      setToggleLike(!isLiking);
+      setLikes((prev) => prev - (isLiking ? 1 : -1));
+      console.log("res.message -> success: " + res.message); // or use toast later
+    } else {
+      console.log("res.message : fails" + res.message);
+      console.log(res.message); // or use toast later
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="lg:col-span-1">
       <div className="bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200 dark:border-gray-800 sticky top-24">
@@ -113,12 +149,43 @@ export function ProjectStatsCard({
             </Button>
           )}
 
-          <Button
-            variant="outline"
-            className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
-            Contact Developer
-          </Button>
+          <Dialog>
+            <form>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  Contact Developer
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Contact Developer</DialogTitle>
+                  <DialogDescription>
+                    Send your Message to Developer
+                    you&apos;re done.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4">
+                 
+                  <div className="grid gap-3">
+                    <Label htmlFor="username-1">Message</Label>
+                    <Textarea
+                      id="messageAdmin"
+                      name="messageAdmin"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button type="submit">Send Message</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
         </div>
       </div>
     </div>
