@@ -44,10 +44,38 @@ export async function likePostTest(projectId: string) {
   console.log("Project ID: ", projectId);
 }
 
+// new - prod
 export async function modifiedLikePost(projectId: string) {
   const { userId, redirectToSignIn } = await auth();
 
   if (!userId) return redirectToSignIn();
 
-  // traverse through Project model to find the userId of the logged-in user
+  const project = await prisma.project.findUnique({
+    where: { id: projectId },
+    select: { userId: true },
+  });
+
+  if (!project) {
+    console.log("Project not found");
+
+    return false;
+  }
+
+  try {
+    const isPresent = project.userId.includes(userId);
+
+    const updatedUserIds = isPresent
+      ? project.userId.filter((id) => id !== userId) // remove
+      : [...project.userId, userId]; // add
+
+    await prisma.project.update({
+      where: { id: projectId },
+      data: { userId: updatedUserIds },
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }

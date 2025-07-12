@@ -21,7 +21,7 @@ model Project {
   likes        Int     @default(0)
   views        Int     @default(0)
 
-  userId       String[] @default([])
+  userId String[] @default([])
 
   createdAt DateTime @default(now())
 }
@@ -40,4 +40,10 @@ model User {
   email    String?  @unique
   imageUrl String?
   likesId  String[] @default([])
+}
+
+model Test {
+  id        String  @id @default(uuid())
+  testField String?
+  testField2 String?
 }
