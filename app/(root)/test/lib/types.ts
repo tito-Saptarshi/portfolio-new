@@ -10,5 +10,6 @@ export type Project = {
   details?: string | null
   likes: number
   views: number
-  craetedAt: Date
+  userId: string[]
+  createdAt: Date
 }

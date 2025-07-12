@@ -1,5 +1,6 @@
 "use server";
 
+import { Project } from "@/app/(root)/test/lib/types";
 import prisma from "@/app/lib/db";
 import { auth } from "@clerk/nextjs/server";
 
@@ -36,6 +37,9 @@ export async function likePost(projectId: string) {
 }
 
 export async function likePostTest(projectId: string) {
+  console.log("server action -> likePostTest : ");
+  console.log();
+
   const { userId, redirectToSignIn } = await auth();
 
   if (!userId) return redirectToSignIn();
@@ -45,37 +49,46 @@ export async function likePostTest(projectId: string) {
 }
 
 // new - prod
-export async function modifiedLikePost(projectId: string) {
+export async function modifiedLikePost(
+  project: Project,
+  isPostLiked: boolean
+): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  console.log("server action -> modifiedLikePost : ");
+  console.log();
+
   const { userId, redirectToSignIn } = await auth();
 
   if (!userId) return redirectToSignIn();
 
-  const project = await prisma.project.findUnique({
-    where: { id: projectId },
-    select: { userId: true },
-  });
-
   if (!project) {
     console.log("Project not found");
 
-    return false;
+    return { success: false, message: "Failed to update like. Try again." };
   }
 
   try {
-    const isPresent = project.userId.includes(userId);
-
-    const updatedUserIds = isPresent
+    const updatedUserIds = isPostLiked
       ? project.userId.filter((id) => id !== userId) // remove
       : [...project.userId, userId]; // add
 
+    const updatedLikes = isPostLiked
+      ? Math.max(0, (project.likes || 0) - 1)
+      : (project.likes || 0) + 1;
+
     await prisma.project.update({
-      where: { id: projectId },
-      data: { userId: updatedUserIds },
+      where: { id: project.id },
+      data: { userId: updatedUserIds, likes: updatedLikes },
     });
 
-    return true;
+    return {
+      success: true,
+      message: isPostLiked ? "Removed like from project" : "Liked the project",
+    };
   } catch (error) {
     console.log(error);
-    return false;
+    return { success: false, message: "Failed to update like. Try again." };
   }
 }

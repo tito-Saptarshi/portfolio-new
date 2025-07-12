@@ -2,27 +2,43 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, Heart } from "lucide-react";
+import { Eye, Heart, Loader2 } from "lucide-react";
 import { Project } from "@/app/(root)/test/lib/types";
 import { useState } from "react";
-import { likePostTest } from "@/actions/post.actions";
+import { likePostTest, modifiedLikePost } from "@/actions/post.actions";
 
-export function ProjectStatsCard({ project }: { project: Project }) {
+export function ProjectStatsCard({
+  project,
+  isPostLiked,
+}: {
+  project: Project;
+  isPostLiked: boolean;
+}) {
   const [likes, setLikes] = useState(project.likes || 0);
-  const [toggleLike, setToggleLike] = useState(false);  
+  const [toggleLike, setToggleLike] = useState(isPostLiked);
+  const [loading, setLoading] = useState(false);
 
-  const handleLike = () => {
-    setLikes(likes + 1);
-    setToggleLike(!toggleLike);
+  const handleLike = async () => {
+    setLoading(true);
 
-    if(toggleLike) {
-      setLikes(likes - 1);
+    const isLiking = !toggleLike;
+    setToggleLike(isLiking);
+    setLikes((prev) => prev + (isLiking ? 1 : -1));
+
+    const res = await modifiedLikePost(project, isPostLiked);
+    console.error("res: " + res);
+    if (!res.success) {
+      // rollback UI if failed
+      setToggleLike(!isLiking);
+      setLikes((prev) => prev - (isLiking ? 1 : -1));
+      console.error("res.message -> success: " + res.message); // or use toast later
     } else {
-      setLikes(likes + 1);
+      console.error("res.message : fails" + res.message);
+      console.log(res.message); // or use toast later
     }
-    likePostTest(project.id);
-  };
 
+    setLoading(false);
+  };
   return (
     <div className="lg:col-span-1">
       <div className="bg-white dark:bg-gray-900/50 rounded-xl p-6 border border-gray-200 dark:border-gray-800 sticky top-24">
@@ -67,15 +83,29 @@ export function ProjectStatsCard({ project }: { project: Project }) {
         </div>
 
         <div className="space-y-3">
-          <form action={handleLike}>
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-medium flex items-center gap-2"
-            >
-              <Heart className="w-4 h-4" />
-              Like Project
-            </Button>
-          </form>
+          <Button
+            type="button"
+            onClick={handleLike}
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-medium flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Processing...
+              </>
+            ) : toggleLike ? (
+              <>
+                <Heart className="w-4 h-4 fill-white text-white" />
+                Liked
+              </>
+            ) : (
+              <>
+                <Heart className="w-4 h-4" />
+                Like Project
+              </>
+            )}
+          </Button>
 
           {project.project_type === "For Sale" && (
             <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium">

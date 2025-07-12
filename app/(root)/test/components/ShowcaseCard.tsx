@@ -1,5 +1,3 @@
-"use client";
-
 import { Project } from "@/app/(root)/test/lib/types";
 
 import Image from "next/image";
@@ -16,17 +14,29 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-
 import markdownit from "markdown-it";
 import { ProjectStatsCard } from "./ProjectStatsCard";
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
-export function ShowcaseCard({
+export async function ShowcaseCard({
   project,
   id,
 }: {
   project: Project;
   id: string;
 }) {
+  const { userId } = await auth();
+
+  let isPostLiked = false;
+
+  if (userId) {
+    const isPresent = project.userId.includes(userId);
+    if (isPresent) {
+      isPostLiked = true;
+    }
+  }
+
   const md = markdownit();
 
   const parsedContent = md.render(project?.details || "");
@@ -41,14 +51,15 @@ export function ShowcaseCard({
       {/* Header */}
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
-          <Button
-            onClick={() => window.history.back()}
-            variant="ghost"
-            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
-          </Button>
+          <Link href={"/all-projects"}>
+            <Button
+              variant="ghost"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Projects
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -212,7 +223,7 @@ export function ShowcaseCard({
             </div>
           </div> */}
 
-          <ProjectStatsCard project={project} />
+          <ProjectStatsCard project={project} isPostLiked={isPostLiked} />
         </div>
       </div>
 
