@@ -119,7 +119,9 @@ export async function ShowcaseCard({
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-col items-start sm:items-end gap-2">
+                
+                {/* Type of Project - showcase / sell / sold  */}
+                {/* <div className="flex flex-col items-start sm:items-end gap-2">
                   <Badge
                     variant={
                       project.project_type === "For Sale"
@@ -134,11 +136,13 @@ export async function ShowcaseCard({
                   >
                     {project.project_type}
                   </Badge>
-                  {/* {project.price && (
+
+                  {project.price && (
                     <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{project.price}</div>
-                  )} */}
-                </div>
+                  )}
+                </div> */}
               </div>
+              
             </div>
 
             {/* Description */}

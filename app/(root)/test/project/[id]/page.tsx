@@ -13,12 +13,10 @@ async function getData(id: string) {
   return data;
 }
 
- 
-
 export default async function Page({ params }: { params: { id: string } }) {
   const project = await getData(params.id);
 
-   incrementViews(params.id);
+  incrementViews(params.id);
   if (!project) return redirect("/");
 
   console.log("Project Details: ", project);

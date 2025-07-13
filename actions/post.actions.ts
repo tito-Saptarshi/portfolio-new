@@ -2,7 +2,8 @@
 
 import { Project } from "@/app/(root)/test/lib/types";
 import prisma from "@/app/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export async function likePost(projectId: string) {
   const { userId, redirectToSignIn } = await auth();
@@ -45,7 +46,7 @@ export async function likeAdminMessageTest(project: Project, message: string) {
   if (!userId) return redirectToSignIn();
 
   console.log("User ID: ", userId);
-   console.log("User ID: ", userId);
+  console.log("User ID: ", userId);
   console.log("Project ID: ", project.id);
   console.log("Project : ", project);
   console.log("Message : ", message);
@@ -111,15 +112,32 @@ export async function incrementViews(projectId: string) {
   }
 }
 
-export async function sendAdminMessage(formData: FormData) {
-  const { getUser } = auth();
-  const user = await getUser();
+export async function sendAdminMessageTest(
+  message: string,
+  project: Project
+) {
+  const user = await currentUser();
+  console.log("sendAdminMessageTest");
+  
+  console.log("userId : ", user?.id);
+  console.log("user email : ", user?.emailAddresses[0].emailAddress);
+  console.log("user fullName : ", user?.firstName, " ", user?.lastName);
+  console.log("user username : ", user?.username);
+  console.log("project id : ", project.id);
+  console.log("project name : ", project.name);
+  console.log("message : ", message);
+  // console.log("user : ", user);
+  // console.log("project : ", project);
+}
+
+export async function sendAdminMessage( message: string,
+  project: Project) {
+  const user = await currentUser();
 
   if (!user || !user.id) {
+    redirect("/login");
     return { success: false, message: "User not authenticated" };
   }
-
-  const message = formData.get("messageAdmin")?.toString();
 
   if (!message || message.trim() === "") {
     return { success: false, message: "Message cannot be empty" };
@@ -129,9 +147,11 @@ export async function sendAdminMessage(formData: FormData) {
     await prisma.adminContact.create({
       data: {
         userId: user.id,
-        userName: user.given_name || "Anonymous",
-        userMail: user.email || "noemail@example.com",
+        userName: user?.firstName + " " + user?.lastName,
+        userMail:user?.emailAddresses[0].emailAddress,
         message: message,
+        projectId: project.id,
+        projectName: project.name
       },
     });
 
