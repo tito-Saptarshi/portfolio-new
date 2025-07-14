@@ -1,7 +1,5 @@
 import { ProjectShowcase } from "@/app/components/ProjectShowcase"
 
-
-
 const page = () => {
   return (
     <>
