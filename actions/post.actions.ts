@@ -99,7 +99,7 @@ export async function modifiedLikePost(
 
 export async function incrementViews(projectId: string) {
   try {
-    await prisma.project.update({
+    const project =await prisma.project.update({
       where: { id: projectId },
       data: {
         views: {
@@ -107,6 +107,8 @@ export async function incrementViews(projectId: string) {
         },
       },
     });
+
+    return project;
   } catch (error) {
     console.error("Failed to increment views", error);
   }

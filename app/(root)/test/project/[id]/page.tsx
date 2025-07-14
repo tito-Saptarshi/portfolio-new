@@ -13,17 +13,27 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const project = await getData(params.id);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+  let project;
 
-  incrementViews(params.id);
+  project = await incrementViews(id);
+  if (!project) {
+    console.error("Project not found or failed to increment views");
+    project = await getData(id);
+  }
+
   if (!project) return redirect("/");
 
-  console.log("Project Details: ", project);
+  // console.log("Project Details: ", project);
 
   return (
     <main>
-      <ShowcaseCard project={project} id={params.id} />
+      <ShowcaseCard project={project} id={id} />
     </main>
   );
 }
