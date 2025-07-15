@@ -36,19 +36,19 @@ export function ProjectSecHeader() {
   return (
     <>
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-6">
+        <div className="container mx-auto px-4 py-2 pb-2 lg:pb-4">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 dark:from-blue-400 dark:via-cyan-400 dark:to-teal-400 bg-clip-text text-transparent">
-                Project Portfolio
+               All Projects
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
+              {/* <p className="text-gray-600 dark:text-gray-400 mt-2">
                 Professional development projects and solutions
-              </p>
+              </p> */}
             </div>
 
             {/* Search and Filter */}
-            <div className="flex flex-col sm:flex-row gap-4 lg:w-auto w-full">
+            {/* <div className="flex flex-col sm:flex-row gap-4 lg:w-auto w-full">
               <div className="relative flex-1 lg:w-80">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 w-4 h-4" />
                 <Input
@@ -74,7 +74,7 @@ export function ProjectSecHeader() {
                   </button>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

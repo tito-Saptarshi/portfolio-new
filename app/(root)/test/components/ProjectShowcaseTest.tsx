@@ -1,5 +1,3 @@
-
-
 import { Project } from "../lib/types";
 import { ProjectCardTest } from "./ProjectCardTest";
 import { ProjectSecHeader } from "./ProjectSecHeader";
