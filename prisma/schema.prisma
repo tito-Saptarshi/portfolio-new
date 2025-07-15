@@ -9,17 +9,18 @@ datasource db {
 }
 
 model Project {
-  id           String  @id @default(uuid())
-  name         String
-  project_type String?
-  project_link String?
-  tools_used   String?
-  github_link  String?
-  other_link   String?
-  imageUrl     String?
-  details      String?
-  likes        Int     @default(0)
-  views        Int     @default(0)
+  id               String  @id @default(uuid())
+  name             String
+  project_type     String?
+  project_link     String?
+  tools_used       String?
+  github_link      String?
+  other_link       String?
+  imageUrl         String?
+  shortDescription String?
+  details          String?
+  likes            Int     @default(0)
+  views            Int     @default(0)
 
   userId String[] @default([])
 

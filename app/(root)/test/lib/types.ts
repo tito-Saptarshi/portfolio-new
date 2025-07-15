@@ -8,6 +8,7 @@ export type Project = {
   other_link?: string | null
   imageUrl?: string | null
   details?: string | null
+  shortDescription?: string | null
   likes: number
   views: number
   userId: string[]

@@ -93,6 +93,14 @@ export default function SimpleProjectForm() {
               />
             </div>
 
+             <div className="flex flex-col space-y-2">
+              <Label>Short Description </Label>
+              <Input
+                name="short_description"
+                placeholder="Short description to show on all-projects page"
+              />
+            </div>
+
             <div data-color-mode="light" className="flex flex-col space-y-2">
               <label htmlFor="pitch">Pitch</label>
               <MDEditor

@@ -10,6 +10,7 @@ export async function createProject(formData: FormData, pitch: string) {
   const githubLink = formData.get("github_link") as string;
   const otherLink = formData.get("other_link") as string;
   const imageUrl = formData.get("project_image") as string;
+  const shortDescription = formData.get("short_description") as string;
 
   console.log("Project created with data:", {
     name,
@@ -17,6 +18,7 @@ export async function createProject(formData: FormData, pitch: string) {
     projectType,
     projectLink,
     githubLink,
+    shortDescription,
     pitch,
   });
 
@@ -30,6 +32,7 @@ export async function createProject(formData: FormData, pitch: string) {
         github_link: githubLink,
         other_link: otherLink,
         imageUrl: imageUrl,
+        shortDescription: shortDescription,
         details: pitch
       },
     });
