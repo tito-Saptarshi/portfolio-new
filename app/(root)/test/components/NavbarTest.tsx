@@ -14,21 +14,23 @@ import {
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 
-export const Navbar = () => {
+export const NavbarTest = () => {
   return (
     <div className="mx-auto mx-2 pb-2">
-
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
           <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/70 dark:bg-black/70 border-b border-black/5 dark:border-white/5">
             <div className="container flex h-16 items-center justify-between px-2">
-              <Link href="/" className="flex items-center space-x-2 group">
+              {/* <Link href="/" className="flex items-center space-x-2 group">
                 <div className="w-10 h-10 bg-black dark:bg-white text-white dark:text-black rounded-lg flex items-center justify-center font-bold text-xl ">
                   JD
                 </div>
                 <span className="hidden font-bold text-xl sm:inline-block">
                   Portfolio
                 </span>
-              </Link>
-              
+              </Link> */}
+               <SidebarTrigger className="-ml-1" />
               <nav className="hidden md:flex items-center space-x-10 text-sm font-medium">
                 <Link
                   href="#home"
@@ -87,7 +89,8 @@ export const Navbar = () => {
               </div>
             </div>
           </header>
-
+        </SidebarInset>
+      </SidebarProvider>
     </div>
   );
 };
