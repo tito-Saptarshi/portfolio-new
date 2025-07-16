@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ModeToggle } from "./ModeToggle";
+
 import { LogInIcon } from "lucide-react";
 
 import {
@@ -12,7 +12,9 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "./AppSidebar";
+import { AppSidebar } from "@/app/components/AppSidebar";
+import { ModeToggle } from "@/app/components/ModeToggle";
+
 
 export const NavbarTest = () => {
   return (
@@ -30,7 +32,7 @@ export const NavbarTest = () => {
                   Portfolio
                 </span>
               </Link> */}
-               <SidebarTrigger className="-ml-1" />
+               <SidebarTrigger />
               <nav className="hidden md:flex items-center space-x-10 text-sm font-medium">
                 <Link
                   href="#home"
