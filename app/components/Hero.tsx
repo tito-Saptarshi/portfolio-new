@@ -11,10 +11,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
+import { RecentProjects } from "./RecentProjects";
 
 export const Hero = () => {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <AppSidebar />
       <SidebarInset>
         <div className="container mx-auto px-2">
@@ -23,7 +24,7 @@ export const Hero = () => {
             {/* Hero Section */}
             
 
-            <SidebarTrigger className="-ml-1 -py-5" />
+            <SidebarTrigger className="-ml-1 -py-5 md:hidden" />
             
             <section id="home" className="container p-2 md:py-5">
               <div className="flex flex-col lg:flex-row gap-16 items-center">
@@ -59,17 +60,20 @@ export const Hero = () => {
 
                   {/* CTA Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                    <Button
-                      size="lg"
-                      className="bg-black text-white dark:bg-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 transition-all duration-300 rounded-full px-8"
-                    >
+                    <Link href="#projects">
+                      <Button
+                        size="lg"
+                        className="bg-black text-white dark:bg-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 transition-all duration-300 rounded-full px-8"
+                      >
                       View My Work
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
+                      </Link>
                     <Button
                       variant="outline"
                       size="lg"
                       className="border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-full px-8"
+                      
                     >
                       Contact Me
                     </Button>
@@ -135,13 +139,17 @@ export const Hero = () => {
             </section>
 
             {/* Recent Projects Section */}
-            <section id="projects" className="container py-20 md:py-32">
+            <section id="projects">
+
+            <RecentProjects />
+            </section>
+            {/* <section id="projects" className="container py-20 md:py-32">
               <div className="flex flex-col space-y-4 mb-16">
                 <div className="inline-flex items-center px-3 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-black text-sm self-start">
                   Featured Work
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white">
-                  Recent Projects
+                  Recent Projects 
                 </h2>
                 <p className="max-w-[600px] text-black/60 dark:text-white/60 text-lg">
                   Here are some of my latest projects that showcase my skills
@@ -226,7 +234,7 @@ export const Hero = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
-            </section>
+            </section> */}
 
             {/* Call to Action */}
             <section className="py-20 md:py-32 relative overflow-hidden">

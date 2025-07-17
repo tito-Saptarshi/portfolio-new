@@ -41,9 +41,9 @@
   ]
 
   export const skills = [
-    { name: "Frontend Development", icon: Code, description: "React, Next.js, Vue.js" },
-    { name: "UI/UX Design", icon: Palette, description: "Figma, Adobe XD, Sketch" },
-    { name: "Performance", icon: Zap, description: "Optimization, SEO, Analytics" },
+    { name: "Backend Development", icon: Code, description: "NodeJS, NextJS, Spring boot" },
+    { name: "Frontend Development", icon: Palette, description: "ReactJS, NextJS" },
+    { name: "Performance", icon: Zap, description: "Optimization, SEO, Scalability" },
   ]
 
 
