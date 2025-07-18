@@ -11,12 +11,6 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { AppSidebar } from "./AppSidebar";
 
 export const Navbar = () => {
   return (
@@ -34,8 +28,8 @@ export const Navbar = () => {
 
           <nav className="hidden md:flex items-center space-x-10 text-sm font-medium">
             <Link
-              href="#home"
-              className="relative transition-colors hover:text-black/80 dark:hover:text-white/80 text-black dark:text-white group"
+              href="/"
+               className="relative transition-colors hover:text-black/80 dark:hover:text-white/80 text-black/60 dark:text-white/60 group"
             >
               Home
               <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>

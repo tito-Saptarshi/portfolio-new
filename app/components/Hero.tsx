@@ -37,7 +37,7 @@ export const Hero = () => {
                   <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black dark:text-white">
                     Hi, I&apos;m <br />
                     <span className="relative">
-                      John Doe
+                      Saptarshi Das
                       <span className="absolute -bottom-2 left-0 w-full h-1 bg-black dark:bg-white"></span>
                     </span>
                   </h1>
@@ -50,7 +50,7 @@ export const Hero = () => {
 
                   <div className="max-w-[600px] text-black/60 dark:text-white/60 text-lg leading-relaxed">
                     <p className="mb-4">
-                      I&lsquo;m a passionate full-stack developer with over 5
+                      I&lsquo;m a passionate full-stack developer with over 3
                       years of experience creating digital solutions that make a
                       difference. I specialize in modern web technologies and
                       love turning complex problems into simple, beautiful

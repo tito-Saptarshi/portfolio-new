@@ -53,6 +53,15 @@ model AdminContact {
   projectName String?
 }
 
+model DirectContact {
+  id          String  @id @default(uuid())
+  name        String
+  email       String
+  companyName String?
+  subject     String
+  Message     String?
+}
+
 model Test {
   id         String  @id @default(uuid())
   testField  String?
