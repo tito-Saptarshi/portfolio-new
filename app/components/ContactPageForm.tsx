@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,52 +15,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Send } from "lucide-react";
 import { adminMessage } from "@/actions/admin.actions";
+import { toast } from "sonner";
+import { SubmitButton } from "./SubmitButtons";
+
+const initialState = {
+  message: "",
+  status: false,
+};
 
 export function ContactPageForm() {
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
+  const [state, formAction] = useActionState(adminMessage, initialState);
+
   const formRef = useRef<HTMLFormElement>(null);
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatus(null);
-
-    const formData = new FormData(e.currentTarget);
-
-    try {
-      console.log("api post hit");
-      
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      setStatus(result);
-
-      if (result.success) {
-        e.currentTarget.reset();
-      }
-    } catch (err) {
-      console.error("Client error:", err);
-      setStatus({ success: false, message: "Something went wrong." });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const onClear = () => {
     formRef.current?.reset();
-    setStatus(null);
   };
 
+  useEffect(() => {
+    if (state.message) {
+      toast(state.message);
+    }
+  }, [state]);
+
   return (
-    <form onSubmit={onSubmit} ref={formRef}>
+    <form action={formAction}>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -138,51 +117,20 @@ export function ContactPageForm() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button type="submit" className="flex-1" disabled={loading}>
-              {loading ? (
-                <div className="flex items-center justify-center w-full gap-2">
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8H4z"
-                    ></path>
-                  </svg>
-                  Sending...
-                </div>
-              ) : (
-                <>
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
-                </>
-              )}
-            </Button>
+            <SubmitButton buttonText="send" loadingText="sending..." />
 
             <Button
               type="button"
               variant="outline"
               className="flex-1 bg-transparent"
               onClick={onClear}
-              disabled={loading}
             >
               Clear Form
             </Button>
           </div>
 
           {/* Status */}
-          {status && (
+          {/* {status && (
             <p
               className={`text-sm text-center mt-2 ${
                 status.success ? "text-green-600" : "text-red-600"
@@ -190,7 +138,7 @@ export function ContactPageForm() {
             >
               {status.message}
             </p>
-          )}
+          )} */}
 
           {/* Disclaimer */}
           <p className="text-sm text-gray-500 text-center">

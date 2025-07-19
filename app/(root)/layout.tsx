@@ -3,6 +3,7 @@ import "../globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { Navbar } from "../components/Navbar";
 import { NavbarTest } from "./test/components/NavbarTest";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function RootLayout({
         {/* <NavbarTest /> */}
         <Navbar />
         {children}
+         <Toaster />
       </ThemeProvider>
     </main>
   );

@@ -2,10 +2,7 @@
 
 import prisma from "@/app/lib/db";
 
-export async function adminMessage(formData: FormData): Promise<{
-  success: boolean;
-  message: string;
-}> {
+export async function adminMessage(prevState: any, formData: FormData) {
   try {
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
@@ -26,15 +23,15 @@ export async function adminMessage(formData: FormData): Promise<{
     console.log("form success action");
 
     return {
-      success: true,
       message: "Message received!",
+      status: true,
     };
   } catch (error) {
     console.log("form success action");
     console.log("Server error: ", error);
     return {
-      success: false,
       message: "Something went wrong.",
+      status: false,
     };
   }
 }
