@@ -1,6 +1,26 @@
 "use server";
 
 import prisma from "@/app/lib/db";
+export async function adminMessage(formData: FormData): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  try {
+    const name = formData.get("name") as string;
+    const toolsUsed = formData.get("tools_used") as string;
+
+    return {
+      success: false,
+      message: "failure",
+    };
+  } catch (error) {
+    console.log("error ", error);
+    return {
+      success: false,
+      message: "failure",
+    };
+  }
+}
 
 export async function createProject(formData: FormData, pitch: string) {
   const name = formData.get("name") as string;

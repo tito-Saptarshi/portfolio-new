@@ -59,7 +59,7 @@ model DirectContact {
   email       String
   companyName String?
   subject     String
-  Message     String?
+  message     String?
 }
 
 model Test {
