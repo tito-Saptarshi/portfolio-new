@@ -1,21 +1,35 @@
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@/components/ui/separator"
+import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
+import { adminMessage } from "@/actions/admin.actions";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+
+  const sendMessageToAdmin = async (formdata: FormData) => {
+     await adminMessage(formdata);
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Get In Touch
+          </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Have a project in mind or just want to chat? I'd love to hear from you. Let's discuss how we can work
-            together.
+            Have a project in mind or just want to chat? I'd love to hear from
+            you. Let's discuss how we can work together.
           </p>
         </div>
 
@@ -28,7 +42,9 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5" />
                   Contact Information
                 </CardTitle>
-                <CardDescription>Feel free to reach out through any of these channels</CardDescription>
+                <CardDescription>
+                  Feel free to reach out through any of these channels
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center gap-3">
@@ -72,7 +88,8 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">
-                  I'm always interested in new opportunities and exciting projects. Whether you need help with:
+                  I'm always interested in new opportunities and exciting
+                  projects. Whether you need help with:
                 </p>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-center gap-2">
@@ -97,16 +114,20 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Send className="h-5 w-5" />
-                Send Me a Message
-              </CardTitle>
-              <CardDescription>Fill out the form below and I'll get back to you as soon as possible</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-6">
+          <form action={sendMessageToAdmin}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Send className="h-5 w-5" />
+                  Send Me a Message
+                </CardTitle>
+                <CardDescription>
+                  Fill out the form below and I'll get back to you as soon as
+                  possible
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
@@ -120,7 +141,12 @@ export default function ContactPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" required />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -130,7 +156,11 @@ export default function ContactPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="What's this about?" required />
+                  <Input
+                    id="subject"
+                    placeholder="What's this about?"
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -150,17 +180,22 @@ export default function ContactPage() {
                     <Send className="mr-2 h-4 w-4" />
                     Send Message
                   </Button>
-                  <Button type="button" variant="outline" className="flex-1 bg-transparent">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="flex-1 bg-transparent"
+                  >
                     Clear Form
                   </Button>
                 </div>
 
                 <p className="text-sm text-gray-500 text-center">
-                  By sending this message, you agree to be contacted regarding your inquiry.
+                  By sending this message, you agree to be contacted regarding
+                  your inquiry.
                 </p>
-              </form>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </form>
         </div>
 
         {/* Footer Note */}
@@ -182,5 +217,5 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
