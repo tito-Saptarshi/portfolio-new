@@ -10,6 +10,7 @@ datasource db {
 
 model Project {
   id               String  @id @default(uuid())
+  project_number   Int?
   name             String
   project_type     String?
   project_link     String?
