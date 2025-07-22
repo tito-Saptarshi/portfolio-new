@@ -99,7 +99,7 @@ export async function modifiedLikePost(
 
 export async function incrementViews(projectId: string) {
   try {
-    const project =await prisma.project.update({
+    const project = await prisma.project.update({
       where: { id: projectId },
       data: {
         views: {
@@ -114,13 +114,10 @@ export async function incrementViews(projectId: string) {
   }
 }
 
-export async function sendAdminMessageTest(
-  message: string,
-  project: Project
-) {
+export async function sendAdminMessageTest(message: string, project: Project) {
   const user = await currentUser();
   console.log("sendAdminMessageTest");
-  
+
   console.log("userId : ", user?.id);
   console.log("user email : ", user?.emailAddresses[0].emailAddress);
   console.log("user fullName : ", user?.firstName, " ", user?.lastName);
@@ -132,14 +129,14 @@ export async function sendAdminMessageTest(
   // console.log("project : ", project);
 }
 
-export async function sendAdminMessage( message: string,
-  project: Project) {
+export async function sendAdminMessage(message: string, project: Project) {
   const user = await currentUser();
 
-  if (!user || !user.id) {
-    redirect("/login");
-    return { success: false, message: "User not authenticated" };
-  }
+  const { userId, redirectToSignIn } = await auth();
+
+  if (!userId) return redirectToSignIn();
+
+ 
 
   if (!message || message.trim() === "") {
     return { success: false, message: "Message cannot be empty" };
@@ -148,12 +145,12 @@ export async function sendAdminMessage( message: string,
   try {
     await prisma.adminContact.create({
       data: {
-        userId: user.id,
+        userId: userId,
         userName: user?.firstName + " " + user?.lastName,
-        userMail:user?.emailAddresses[0].emailAddress,
+        userMail: user?.emailAddresses[0].emailAddress || "",
         message: message,
         projectId: project.id,
-        projectName: project.name
+        projectName: project.name,
       },
     });
 
