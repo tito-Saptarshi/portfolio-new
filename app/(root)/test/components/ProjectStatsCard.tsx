@@ -1,14 +1,12 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Heart, Loader2 } from "lucide-react";
 import { Project } from "@/app/(root)/test/lib/types";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import {
   modifiedLikePost,
-  sendAdminMessage,
-  sendAdminMessageTest,
+  sendAdminMessage
 } from "@/actions/post.actions";
 
 import {

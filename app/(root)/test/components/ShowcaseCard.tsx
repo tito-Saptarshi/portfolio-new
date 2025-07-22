@@ -3,13 +3,7 @@ import { Project } from "@/app/(root)/test/lib/types";
 import Image from "next/image";
 import {
   ArrowLeft,
-  Heart,
   Eye,
-  Code,
-  Palette,
-  Database,
-  Globe,
-  Smartphone,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +12,6 @@ import markdownit from "markdown-it";
 import { ProjectStatsCard } from "./ProjectStatsCard";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import View from "./View";
 import { extractWords } from "@/app/lib/utils";
 
 export async function ShowcaseCard({

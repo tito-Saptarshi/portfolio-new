@@ -3,7 +3,6 @@
 import { Project } from "@/app/(root)/test/lib/types";
 import prisma from "@/app/lib/db";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 export async function likePost(projectId: string) {
   const { userId, redirectToSignIn } = await auth();
