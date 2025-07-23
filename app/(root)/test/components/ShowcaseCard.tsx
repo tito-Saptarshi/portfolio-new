@@ -1,10 +1,7 @@
 import { Project } from "@/app/(root)/test/lib/types";
 
 import Image from "next/image";
-import {
-  ArrowLeft,
-  Eye,
-} from "lucide-react";
+import { ArrowLeft, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -111,8 +108,37 @@ export async function ShowcaseCard({
                       </Badge>
                     ))}
                   </div>
+                  {(project.project_link || project.github_link) && (
+                    <div className="mt-8">
+                      <h3 className=" font-semibold text-gray-900 dark:text-white mb-4">
+                        🔗 Links
+                      </h3>
+                      <div className="flex flex-col gap-3">
+                        {project.project_link && (
+                          <a
+                            href={project.project_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline dark:text-blue-400"
+                          >
+                            🌐 Deployed Link
+                          </a>
+                        )}
+                        {project.github_link && (
+                          <a
+                            href={project.github_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline dark:text-blue-400"
+                          >
+                            📦 GitHub Repository
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                
+
                 {/* Type of Project - showcase / sell / sold  */}
                 {/* <div className="flex flex-col items-start sm:items-end gap-2">
                   <Badge
@@ -135,7 +161,6 @@ export async function ShowcaseCard({
                   )}
                 </div> */}
               </div>
-              
             </div>
 
             {/* Description */}
@@ -151,6 +176,27 @@ export async function ShowcaseCard({
                 />
               ) : (
                 <p className="no-result">No details provided</p>
+              )}
+
+              {/* External Project Links */}
+              {project.other_link && (
+                <div className="mt-8">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    Other Links
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {project.other_link && (
+                      <a
+                        href={project.other_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline dark:text-blue-400"
+                      >
+                        🔗 LinkedIn
+                      </a>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           </div>
