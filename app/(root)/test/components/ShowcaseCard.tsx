@@ -171,7 +171,7 @@ export async function ShowcaseCard({
 
               {parsedContent ? (
                 <article
-                  className="prose max-w-4xl font-work-sans break-all"
+                  className="prose dark:prose-invert"
                   dangerouslySetInnerHTML={{ __html: parsedContent }}
                 />
               ) : (
